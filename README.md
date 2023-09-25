@@ -3,6 +3,7 @@
  - [Features](#features)
  - [Installation](#installation)
  - [Configuration](#configuration)
+ - [Screenshots](#screenshots)
 
 
 ## Features
