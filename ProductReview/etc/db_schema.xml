@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ *
+ * @author Carlos Freitas Junior <cafreitasjunior@gmail.com>
+ * @link   https://github.com/carlosfreitasjunior
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+   <table name="techshop_productreview_reviews" resource="default" engine="innodb" comment="Techshop Product Review table">
+      <column xsi:type="int" name="review_id" unsigned="false" nullable="false" comment="Review ID" />
+      <column xsi:type="varchar" name="nickname" nullable="false" length="20" comment="Author Name" />
+      <column xsi:type="varchar" name="summary" nullable="false" length="20" comment="Summary" />
+      <column xsi:type="varchar" name="review" nullable="false" comment="Review Content" />
+      <column xsi:type="varchar" name="review_status" nullable="false" comment="Review Status" />
+      <column xsi:type="varchar" name="product_sku" nullable="false" comment="Product SKU" />
+      <column xsi:type="timestamp" name="created" default="CURRENT_TIMESTAMP" />
+      <column xsi:type="timestamp" name="updated" default="CURRENT_TIMESTAMP" />
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+         <column name="review_id" />
+      </constraint>
+   </table>
+</schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ *
+ * @author Carlos Freitas Junior <cafreitasjunior@gmail.com>
+ * @link   https://github.com/carlosfreitasjunior
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="techshop" frontName="techshop">
+            <module name="Techshop_ProductReview"/>
+        </route>
+    </router>
+</config>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ *
+ * @author Carlos Freitas Junior <cafreitasjunior@gmail.com>
+ * @link   https://github.com/carlosfreitasjunior
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="Techshop_ProductReview::techshop"
+            title="Techshop"
+            translate="title"
+            module="Techshop_ProductReview"
+            sortOrder="30"
+            resource="Magento_Backend::content"
+        />
+
+        <add
+            id="Techshop_ProductReview::all_reviews"
+            title="All Reviews"
+            translate="title"
+            module="Techshop_ProductReview"
+            sortOrder="10"
+            resource="Magento_Review::reviews_all"
+            parent="Techshop_ProductReview::techshop"
+            action="techshop/products/review"
+        />
+
+        <add
+            id="Techshop_ProductReview::techshop_cpr_config"
+            title="Product Review Configuration"
+            translate="title"
+            module="Techshop_ProductReview"
+            sortOrder="40"
+            resource="Magento_Backend::content"
+            parent="Techshop_ProductReview::techshop"
+            action="adminhtml/system_config/edit/section/techshop"
+        />
+    </menu>
+</config>

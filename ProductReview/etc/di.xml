@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ *
+ * @author Carlos Freitas Junior <cafreitasjunior@gmail.com>
+ * @link   https://github.com/carlosfreitasjunior
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!--frontend override-->
+    <preference for="Magento\Review\Block\Form" type="Techshop\ProductReview\Block\Form" />
+    <preference for="Magento\Review\Block\Product\View\ListView" type="Techshop\ProductReview\Block\Product\View\ListView" />
+
+    <preference for="Techshop\ProductReview\Api\ConfigInterface" type="Techshop\ProductReview\Model\Config"/>
+    <preference for="Techshop\ProductReview\Api\ReviewRepositoryInterface" type="Techshop\ProductReview\Model\ReviewRepository" />
+    <preference for="Techshop\ProductReview\Api\Data\ReviewInterface" type="Techshop\ProductReview\Model\Review" />
+    <preference for="Techshop\ProductReview\Api\Data\ReviewSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="techshop_productreview_listing_data_source" xsi:type="string">TechshopProductreviewCollection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="TechshopProductreviewCollection" type="Techshop\ProductReview\Ui\DataProvider\Listing\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">techshop_productreview_reviews</argument>
+            <argument name="resourceModel" xsi:type="string">Techshop\ProductReview\Model\ResourceModel\Review</argument>
+        </arguments>
+    </virtualType>
+
+</config>

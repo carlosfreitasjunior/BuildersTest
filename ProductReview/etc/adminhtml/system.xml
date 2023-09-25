@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ *
+ * @author Carlos Freitas Junior <cafreitasjunior@gmail.com>
+ * @link   https://github.com/carlosfreitasjunior
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="techshop" sortOrder="99" translate="label">
+            <label>TechShop</label>
+        </tab>
+        <section id="techshop" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Customer Product Review</label>
+            <tab>techshop</tab>
+            <resource>Techshop_ProductReview::techshop_cpr_config</resource>
+            <group id="product_review_general_settings" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="enabled_module" translate="label" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled Customer Product Review</label>
+                    <comment>Enabled/Disabled customer product review.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
