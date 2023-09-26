@@ -11,8 +11,10 @@ declare(strict_types=1);
 namespace Techshop\ProductReview\Controller\Review;
 
 use Techshop\ProductReview\Model\ReviewFactory as CustomReviewFactory;
+use Techshop\ProductReview\Model\ResourceModel\Review as CustomReviewResource;
 use Magento\Review\Controller\Product as ProductController;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Review\Model\Review;
 
 class Save extends ProductController
 {
@@ -21,8 +23,14 @@ class Save extends ProductController
      */
     protected $customReviewFactory;
 
+    /**
+     * @var CustomReviewResource
+     */
+    protected $customReviewResource;
+
     public function __construct(
         CustomReviewFactory $customReviewFactory,
+        CustomReviewResource $customReviewResource,
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Customer\Model\Session $customerSession,
@@ -37,6 +45,7 @@ class Save extends ProductController
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
     ) {
         $this->customReviewFactory = $customReviewFactory;
+        $this->customReviewResource = $customReviewResource;
         parent::__construct(
             $context,
             $coreRegistry,
@@ -67,14 +76,17 @@ class Save extends ProductController
 
         try {
             $reviewData = [
-                'review_id'     => (int)$product->getId(),
                 'nickname'      => $post['nickname'],
                 'summary'       => $post['summary'],
                 'review'        => $post['review'],
-                'review_status' => 'pending',
-                'product_sku'   => $product->getSku()
+                'review_status' => Review::STATUS_PENDING,
+                'product_sku'   => $product->getSku(),
+                'product_id'    => $product->getId()
             ];
-            $this->reviewFactory->create()->setData($reviewData)->save();
+
+            
+            $review = $this->reviewFactory->create()->setData($reviewData);
+            $this->customReviewResource->save($review);
             $this->messageManager->addSuccessMessage(__('Review submitted!'));
         } catch (\Throwable $e) {
             $this->messageManager->addErrorMessage(__('Error on submit form.'));

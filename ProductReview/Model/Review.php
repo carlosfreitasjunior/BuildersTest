@@ -29,7 +29,7 @@ class Review extends AbstractExtensibleModel implements ReviewInterface, Identit
     }
     public function getReviewId(): int
     {
-        return $this->getData(self::REVIEW_ID);
+        return (int)$this->getData(self::REVIEW_ID);
     }
     public function getNickname(): string
     {
@@ -101,7 +101,7 @@ class Review extends AbstractExtensibleModel implements ReviewInterface, Identit
         if ($this->isObjectNew() && !$this->getCreatedAt()) {
             $this->setCreatedAt(date("Y-m-d H:i:s"));
         }
-            $this->setUpdatedAt(date("Y-m-d H:i:s"));
+        $this->setUpdatedAt(date("Y-m-d H:i:s"));
         return parent::beforeSave();
     }
 }

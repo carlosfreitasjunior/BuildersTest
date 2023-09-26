@@ -31,5 +31,4 @@
             <argument name="resourceModel" xsi:type="string">Techshop\ProductReview\Model\ResourceModel\Review</argument>
         </arguments>
     </virtualType>
-
 </config>

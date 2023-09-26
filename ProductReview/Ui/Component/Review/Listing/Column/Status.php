@@ -11,48 +11,40 @@ declare(strict_types=1);
 
 namespace Techshop\ProductReview\Ui\Component\Review\Listing\Column;
 
-use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\Framework\Url;
+use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
+use Magento\Review\Model\ResourceModel\Review\Status\CollectionFactory;
 
-class Actions extends Column
+class Status extends Column
 {
     /**
-     * @var UrlInterface
+     * @var CollectionFactory
      */
-    protected $_urlBuilder;
+    protected $collection;
 
     /**
-     * @var string
-     */
-    protected $_viewUrl;
-
-    /**
-     * Constructor
+     * RegionLabel constructor.
      *
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param Url $urlBuilder
-     * @param string $viewUrl
+     * @param CollectionFactory $collection
      * @param array $components
      * @param array $data
      */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        Url $urlBuilder,
-        $viewUrl = '',
+        CollectionFactory $collection,
         array $components = [],
         array $data = []
     ) {
-        $this->_urlBuilder = $urlBuilder;
-        $this->_viewUrl    = $viewUrl;
+        $this->collection = $collection;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
     /**
-     * Prepare Data Source
+     * Replace region_id value with its label in each row of the grid
      *
      * @param array $dataSource
      * @return array
@@ -61,16 +53,13 @@ class Actions extends Column
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as &$item) {
-                $name = $this->getData('name');
-                if (isset($item['entity_id'])) {
-                    $item[$name]['view']   = [
-                        'href'  => $this->_urlBuilder->getUrl($this->_viewUrl, ['id' => $item['entity_id']]),
-                        'target' => '_blank',
-                        'label' => __('View on Frontend')
-                    ];
-                }
+                $statusId = $item[$this->getData('name')];
+                $status = $this->collection->create()->getItemById($statusId);
+                $statusLabel = $status->getStatusCode();
+                $item[$this->getData('name')] = $statusLabel;
             }
         }
+
         return $dataSource;
     }
 }

@@ -9,123 +9,141 @@
 -->
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
   <argument name="data" xsi:type="array">
-     <item name="js_config" xsi:type="array">
-        <item name="provider" xsi:type="string">techshop_productreview_listing.techshop_productreview_listing_data_source</item>
-        <item name="deps" xsi:type="string">techshop_productreview_listing.techshop_productreview_listing_data_source</item>
-     </item>
-     <item name="spinner" xsi:type="string">techshop_productreview_columns</item>
+    <item name="js_config" xsi:type="array">
+      <item name="provider" xsi:type="string">techshop_productreview_listing.techshop_productreview_listing_data_source</item>
+      <item name="deps" xsi:type="string">techshop_productreview_listing.techshop_productreview_listing_data_source</item>
+    </item>
+    <item name="spinner" xsi:type="string">techshop_productreview_columns</item>
   </argument>
   <dataSource name="techshop_productreview_listing_data_source">
-   <argument name="dataProvider" xsi:type="configurableObject">
-       <argument name="class" xsi:type="string">Techshop\ProductReview\Ui\DataProvider\Review\ListingDataProvider</argument>
-       <argument name="name" xsi:type="string">techshop_productreview_listing_data_source</argument>
-       <argument name="primaryFieldName" xsi:type="string">review_id</argument>
-       <argument name="requestFieldName" xsi:type="string">review_id</argument>
-       <argument name="data" xsi:type="array">
-         <item name="config" xsi:type="array">
-           <item name="update_url" xsi:type="url" path="mui/index/render"/>
-           <item name="storageConfig" xsi:type="array">
-             <item name="indexField" xsi:type="string">review_id</item>
-           </item>
-         </item>
-       </argument>
-   </argument>
-   <argument name="data" xsi:type="array">
-     <item name="js_config" xsi:type="array">
+    <argument name="dataProvider" xsi:type="configurableObject">
+      <argument name="class" xsi:type="string">Techshop\ProductReview\Ui\DataProvider\Review\ListingDataProvider</argument>
+      <argument name="name" xsi:type="string">techshop_productreview_listing_data_source</argument>
+      <argument name="primaryFieldName" xsi:type="string">review_id</argument>
+      <argument name="requestFieldName" xsi:type="string">review_id</argument>
+      <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+          <item name="update_url" xsi:type="url" path="mui/index/render"/>
+          <item name="storageConfig" xsi:type="array">
+            <item name="indexField" xsi:type="string">review_id</item>
+          </item>
+        </item>
+      </argument>
+    </argument>
+    <argument name="data" xsi:type="array">
+      <item name="js_config" xsi:type="array">
         <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
-     </item>
-   </argument>
+      </item>
+    </argument>
   </dataSource>
   <listingToolbar name="listing_top">
     <bookmark name="bookmarks"/>
     <columnsControls name="columns_controls"/>
-    <massaction name="listing_massaction">
+    <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions" class="\Techshop\ProductReview\Ui\Component\Review\MassAction">
       <argument name="data" xsi:type="array">
-        <item name="data" xsi:type="array">
-           <item name="selectProvider" xsi:type="string">techshop_productreview_listing.techshop_productreview_listing.techshop_productreview_columns.ids</item>
-           <item name="displayArea" xsi:type="string">bottom</item>
-           <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
-           <item name="indexField" xsi:type="string">review_id</item>
+        <item name="config" xsi:type="array">
+          <item name="selectProvider" xsi:type="string">techshop_productreview_listing.techshop_productreview_listing.techshop_productreview_columns.ids</item>
+          <item name="indexField" xsi:type="string">review_id</item>
         </item>
       </argument>
-      <!-- <action name="delete">
-         <argument name="data" xsi:type="array">
-           <item name="config" xsi:type="array">
-               <item name="type" xsi:type="string">delete</item>
-               <item name="label" xsi:type="string" translate="true">Delete</item>
-               <item name="url" xsi:type="url" path="dev_grid/category/massDelete"/>
-               <item name="confirm" xsi:type="array">
-                  <item name="title" xsi:type="string" translate="true">Delete items</item>
-                  <item name="message" xsi:type="string" translate="true">Are you sure you want to delete selected items?</item>
-               </item>
-           </item>
-         </argument>
-      </action> -->
+      <action name="delete">
+        <settings>
+          <confirm>
+            <message translate="true">Are you sure you want to delete selected items?</message>
+            <title translate="true">Delete items</title>
+          </confirm>
+          <url path="techshop/massAction/massDelete"/>
+          <type>delete</type>
+          <label translate="true">Delete</label>
+        </settings>
+      </action>
+      <action name="status">
+        <settings>
+          <type>status</type>
+          <label translate="true">Change status</label>
+          <actions>
+            <action name="0">
+              <type>enable</type>
+              <label translate="true">Approved</label>
+              <url path="techshop/massAction/massStatus">
+                <param name="status">1</param>
+              </url>
+            </action>
+            <action name="1">
+              <type>disable</type>
+              <label translate="true">Not Approved</label>
+              <url path="blog/manage/massStatus">
+                <param name="status">0</param>
+              </url>
+            </action>
+          </actions>
+        </settings>
+      </action>
     </massaction>
     <filters name="listing_filters">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="templates" xsi:type="array">
-                        <item name="filters" xsi:type="array">
-                            <item name="select" xsi:type="array">
-                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
-                                <item name="template" xsi:type="string">ui/grid/filters/elements/ui-select</item>
-                            </item>
-                        </item>
-                    </item>
-                </item>
-            </argument>
+      <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+          <item name="templates" xsi:type="array">
+            <item name="filters" xsi:type="array">
+              <item name="select" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+                <item name="template" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+              </item>
+            </item>
+          </item>
+        </item>
+      </argument>
     </filters>
     <paging name="listing_paging"/>
   </listingToolbar>
   <columns name="techshop_productreview_columns">
     <selectionsColumn name="ids">
-       <argument name="data" xsi:type="array">
-           <item name="config" xsi:type="array">
-              <item name="indexField" xsi:type="string">review_id</item>
-           </item>
-       </argument>
+      <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+          <item name="indexField" xsi:type="string">review_id</item>
+        </item>
+      </argument>
     </selectionsColumn>
     <column name="review_id">
       <settings>
-         <filter>textRange</filter>
-         <label translate="true">ID</label>
-         <resizeDefaultWidth>25</resizeDefaultWidth>
+        <filter>textRange</filter>
+        <label translate="true">ID</label>
+        <resizeDefaultWidth>25</resizeDefaultWidth>
       </settings>
     </column>
-    <column name="review_status">
+    <column name="review_status" class="\Techshop\ProductReview\Ui\Component\Review\Listing\Column\Status">
       <settings>
-         <filter>text</filter>
-         <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-         <label translate="true">Status</label>
+        <filter>text</filter>
+        <bodyTmpl>ui/grid/cells/text</bodyTmpl>
+        <label translate="true">Status</label>
       </settings>
     </column>
     <column name="product_sku">
       <settings>
-         <filter>text</filter>
-         <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-         <label translate="true">Product</label>
+        <filter>text</filter>
+        <bodyTmpl>ui/grid/cells/text</bodyTmpl>
+        <label translate="true">Product</label>
       </settings>
     </column>
     <column name="nickname">
       <settings>
-         <filter>text</filter>
-         <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-         <label translate="true">Nickname</label>
-     </settings>
+        <filter>text</filter>
+        <bodyTmpl>ui/grid/cells/text</bodyTmpl>
+        <label translate="true">Nickname</label>
+      </settings>
     </column>
     <column name="summary">
       <settings>
-         <filter>text</filter>
-         <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-         <label translate="true">Summary</label>
+        <filter>text</filter>
+        <bodyTmpl>ui/grid/cells/text</bodyTmpl>
+        <label translate="true">Summary</label>
       </settings>
     </column>
     <column name="review">
       <settings>
-         <filter>text</filter>
-         <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-         <label translate="true">Review</label>
+        <filter>text</filter>
+        <bodyTmpl>ui/grid/cells/text</bodyTmpl>
+        <label translate="true">Review</label>
       </settings>
     </column>
     <column name="created" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
@@ -142,15 +160,5 @@
         <label translate="true">Updated</label>
       </settings>
     </column>
-    <actionsColumn name="actions" class="Techshop\ProductReview\Ui\Component\Review\Listing\Column\Actions">
-       <argument name="data" xsi:type="array">
-          <item name="config" xsi:type="array">
-              <item name="resizeEnabled" xsi:type="boolean">false</item>
-              <item name="resizeDefaultWidth" xsi:type="string">107</item>
-              <item name="indexField" xsi:type="string">entity_id</item>
-          </item>
-       </argument>
-       <argument name="viewUrl" xsi:type="string">catalog/category/view</argument>
-    </actionsColumn>
   </columns>
 </listing>
