@@ -7,6 +7,10 @@
  * @link   https://github.com/carlosfreitasjunior
  */
 
+ /**
+ * @todo carregar revisões do módulo para apresentar no frontend 
+ */
+
 declare(strict_types=1);
 
 namespace Techshop\ProductReview\Block\Product\View;
@@ -20,31 +24,9 @@ class ListView extends \Magento\Review\Block\Product\View\ListView
 {
 
     /**
-     * Store manager
-     *
-     * @var StoreManagerInterface
-     */
-    protected $_storeManager;
-
-    /**
      * @var \Magento\Framework\App\ScopeInterface
      */
     protected $scopeConfig;
-
-    /**
-     * @var \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress
-     */
-    protected $remoteAddress;
-
-    /**
-     * @var \Magento\Framework\Filesystem
-     */
-    protected $_fileSystem;
-
-    /**
-     * @var \Magento\Framework\Image\AdapterFactory
-     */
-    protected $_imageFactory;
 
     /**
      * ListView constructor.
@@ -61,7 +43,6 @@ class ListView extends \Magento\Review\Block\Product\View\ListView
      * @param \Magento\Review\Model\ResourceModel\Review\CollectionFactory $collectionFactory
      * @param array $data
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
@@ -75,16 +56,8 @@ class ListView extends \Magento\Review\Block\Product\View\ListView
         ProductRepositoryInterface $productRepository,
         \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
         \Magento\Review\Model\ResourceModel\Review\CollectionFactory $collectionFactory,
-        \Magento\Framework\HTTP\PhpEnvironment\RemoteAddress $remoteAddress,
-        \Magento\Framework\Filesystem $fileSystem,
-        \Magento\Framework\Image\AdapterFactory $imageFactory,
-        StoreManagerInterface $storeManager,
         array $data = []
     ) {
-        $this->_storeManager = $storeManager;
-        $this->remoteAddress = $remoteAddress;
-        $this->_fileSystem = $fileSystem;
-        $this->_imageFactory = $imageFactory;
         $this->scopeConfig = $context->getScopeConfig();
         parent::__construct(
             $context,
@@ -102,46 +75,4 @@ class ListView extends \Magento\Review\Block\Product\View\ListView
         );
     }
 
-    protected function _construct()
-    {
-        parent::_construct();
-        
-        $this->setTemplate('Techshop_ProductReview::products/view/list.phtml');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCustomCollection()
-    {
-        var_dump('teste');
-        exit;
-        return $this->_customFactory->create();
-    }
-
-
-    /**
-     * @param $path
-     * @return mixed
-     */
-    public function getValueConfig($path)
-    {
-        return $this->scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-
-    /**
-     * Get URL for ajax call
-     *
-     * @return string
-     */
-    public function getProductReviewUrl()
-    {
-        return $this->getUrl(
-            'review/product/listAjax',
-            [
-                '_secure' => $this->getRequest()->isSecure(),
-                'id' => $this->getProductId()
-            ]
-        );
-    }
 }
